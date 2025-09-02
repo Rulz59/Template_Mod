@@ -3,3 +3,22 @@ build/
 out/
 .idea/
 *.iml
+
+# Ignore Gradle caches everywhere
+**/.gradle/
+
+# Ignore build outputs everywhere
+**/build/
+
+# IntelliJ project files
+.idea/
+*.iml
+
+# IntelliJ module output
+out/
+
+# Minecraft run directory (runtime worlds, logs, configs)
+run/
+
+# Heap dumps
+*.hprof

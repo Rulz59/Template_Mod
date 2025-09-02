@@ -13,7 +13,12 @@ allprojects {
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
-    kotlin {
-        jvmToolchain(17)
+    // Now that the plugin is applied, the 'java' extension exists
+    configure<JavaPluginExtension> {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
     }
 }
+
+
