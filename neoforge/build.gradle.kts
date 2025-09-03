@@ -1,35 +1,41 @@
-//import org.jetbrains.kotlin.js.backend.ast.JsEmpty.setSource
-//import sun.jvmstat.monitor.MonitoredVmUtil.jvmArgs
-val neoForgeVersion: String by project
-
-
-
 plugins {
-    kotlin("jvm")
-    id("net.neoforged.gradle.userdev") version "7.0.92"
+    kotlin("jvm") version "2.0.186"
+    id("net.neoforged.moddev.legacyforge") version "2.0.106"
 }
 
 repositories {
     mavenCentral()
     maven("https://maven.neoforged.net/releases")
+    maven("https://maven.minecraftforge.net")
 }
+
+val minecraftVersion: String by project // e.g. "1.20.1"
+val forgeVersion: String by project     // e.g. "47.2.0"
+val runJvmArgs: String by project       // optional
 
 dependencies {
     implementation(project(":common"))
-    implementation("net.neoforged:neoforge:${neoForgeVersion}")
+
+    // Use 'add' to avoid the Kotlin accessor ambiguity:
+    add("minecraft", "net.minecraftforge:forge:$minecraftVersion-$forgeVersion")
+
+    // If you prefer a typed accessor later, once accessors are generated you can switch to:
+    // minecraft("net.minecraftforge:forge:$minecraftVersion-$forgeVersion")
 }
 
-val runJvmArgs: String by project
-
-runs {
-    configureEach {
-        workingDirectory = file("../run")
-        modSource(project.sourceSets.main.get())
-        jvmArguments(runJvmArgs.split(" "))
+minecraft {
+    runs {
+        create("client") {
+            workingDirectory(file("./run"))
+            if (project.hasProperty("mc_args")) {
+                args(project.property("mc_args").toString().split(" ").filter { it.isNotBlank() })
+            }
+            if (runJvmArgs.isNotBlank()) {
+                jvmArguments(runJvmArgs.split(" ").filter { it.isNotBlank() })
+            }
+        }
     }
-    create("client")
 }
-
 
 tasks.processResources {
     filesMatching("META-INF/neoforge.mods.toml") {
