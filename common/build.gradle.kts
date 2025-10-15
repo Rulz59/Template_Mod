@@ -1,7 +1,16 @@
 plugins {
     kotlin("jvm")
+    `java-library`
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+    withSourcesJar()
 }
 
 dependencies {
-    // No loader APIs here — only pure Kotlin + MC mappings if needed
+    // Only standard Kotlin here, keep it loader-agnostic
+    //api(kotlin("stdlib"))
 }
