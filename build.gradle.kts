@@ -1,36 +1,32 @@
-// Workaround: limit Kotlin's configureDefaultVersionsResolutionStrategy to compile-only configs
+// Workaround: prevent Kotlin version resolution from breaking Forge/Fabric runs
 gradle.projectsEvaluated {
-    configurations.matching { it.name != "runtimeClasspath" }.all {
-        // no-op, ensures kotlin action runs on others; this is a heuristic and may be required to tweak
-    }
+    configurations.matching { it.name != "runtimeClasspath" }.all { /* no-op */ }
 }
 
+// Apply plugins to the root project
 plugins {
-    kotlin("jvm") version "1.9.23"
+    alias(libs.plugins.kotlin)
 }
 
-group = "net.rulz59"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testImplementation(kotlin("test"))
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
+// Set Java toolchain version for Kotlin compilation
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(libs.versions.java.get().toInt())
 }
 
+// Add common objects to all subprojects
 allprojects {
     repositories {
         mavenCentral()
         gradlePluginPortal()
-        maven("https://maven.fabricmc.net/") // Fabric’s Maven
     }
 }
+
+// Unit Tests
+/*
+dependencies {
+    testImplementation(kotlin("test"))
+}
+tasks.test {
+    useJUnitPlatform()
+}
+ */

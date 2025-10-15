@@ -1,15 +1,13 @@
 plugins {
-    id("net.minecraftforge.gradle") version "6.0.24" // or 6.0.51 if available
-    kotlin("jvm") version "1.9.23"
+    alias(libs.plugins.forgegradle)
+    alias(libs.plugins.kotlin)
 }
-
-group = "com.yourorg"
-version = "1.0.0"
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get().toInt()))
     withSourcesJar()
 }
+
 
 repositories {
     mavenCentral()
@@ -21,15 +19,12 @@ val minecraftVersion = "1.20.1"
 val forgeVersion = "47.1.3"
 
 minecraft {
-    mappings("official", "1.20.1")
-
+    mappings("official", libs.versions.minecraft.get())
     runs {
         create("client") {
             workingDirectory(project.file("run"))
             property("forge.logging.markers", "REGISTRIES")
             property("forge.logging.console.level", "debug")
-
-            // 👇 This ensures CommonMod is on the runtime classpath
             mods {
                 create("temp_mod") {
                     source(sourceSets.main.get())
@@ -41,7 +36,6 @@ minecraft {
             workingDirectory(project.file("run"))
             property("forge.logging.markers", "REGISTRIES")
             property("forge.logging.console.level", "debug")
-
             mods {
                 create("temp_mod") {
                     source(sourceSets.main.get())
@@ -53,12 +47,13 @@ minecraft {
 }
 
 
+
 dependencies {
-    minecraft("net.minecraftforge:forge:$minecraftVersion-$forgeVersion")
-    implementation(kotlin("stdlib"))
+    minecraft("net.minecraftforge:forge:${libs.versions.minecraft.get()}-${libs.versions.forge.get()}")
+    implementation(libs.kotlin.stdlib)
     implementation(project(":common"))
-    // implementation("thedarkcolour:kotlinforforge:4.3.0")
 }
+
 
 tasks.processResources {
     filesMatching("META-INF/mods.toml") {

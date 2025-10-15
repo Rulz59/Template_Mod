@@ -1,16 +1,11 @@
+// Apply plugins common to all subprojects
 plugins {
-    kotlin("jvm")
+    alias(libs.plugins.kotlin)
     `java-library`
 }
 
+// Configure Java toolchain and source jar generation
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
+    toolchain.languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get().toInt()))
     withSourcesJar()
-}
-
-dependencies {
-    // Only standard Kotlin here, keep it loader-agnostic
-    //api(kotlin("stdlib"))
 }
