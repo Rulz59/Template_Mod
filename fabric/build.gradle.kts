@@ -1,19 +1,20 @@
+// Plugins for Fabric subproject
 plugins {
     alias(libs.plugins.loom)
     alias(libs.plugins.kotlin)
 }
 
-
+// Java toolchain and source jar
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get().toInt()))
     withSourcesJar()
 }
 
-
+// Dependencies for Minecraft mod
 dependencies {
     // Minecraft + mappings
     minecraft("com.mojang:minecraft:${libs.versions.minecraft.get()}")
-    mappings("net.fabricmc:yarn:${libs.versions.minecraft.get()}+build.10:v2")
+    mappings("net.fabricmc:yarn:${libs.versions.minecraft.get()}+build.${libs.versions.yarnBuild.get()}:${libs.versions.yarnNamespace.get()}")
 
     // Fabric loader + API
     modImplementation("net.fabricmc:fabric-loader:${libs.versions.fabricLoader.get()}")
@@ -26,10 +27,7 @@ dependencies {
     implementation(project(":common"))
 }
 
-
-
-
-
+// Process resources task to include common resources and expand mod metadata
 tasks.processResources {
     from(project(":common").sourceSets.main.get().resources)
     filesMatching("fabric.mod.json") {
@@ -49,6 +47,3 @@ tasks.processResources {
         )
     }
 }
-
-
-

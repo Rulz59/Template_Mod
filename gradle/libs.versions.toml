@@ -6,12 +6,15 @@ fabricLoader = "0.15.11"
 fabricApi = "0.92.0+1.20.1"
 kotlin = "1.9.23"
 java = "17"
+yarnBuild = "10"
+yarnNamespace = "v2"
 
 [libraries]
 forge = { module = "net.minecraftforge:forge", version.ref = "forge" }
 fabricLoader = { module = "net.fabricmc:fabric-loader", version.ref = "fabricLoader" }
 fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
 kotlinStdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+yarnMappings = { module = "net.fabricmc:yarn", version.ref = "minecraft" }
 
 [plugins]
 forgeGradle = { id = "net.minecraftforge.gradle", version.ref = "forgeGradle" }
