@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "${modId}",
+  "version": "${modVersion}",
+  "name": "${modName}",
+  "description": "${modDescription}",
+  "authors": ["${modAuthors}"],
+  "license": "${modLicense}",
+  "icon": "${modIcon}",
+  "contact": { "issues": "${modIssues}" },
+  "environment": "*",
+  "entrypoints": {
+    "main": ["${modGroup}.${modId}.fabric.FabricMod"]
+  },
+  "depends": {
+    "fabricloader": ">=${fabricLoaderVersion}",
+    "minecraft": "${minecraftVersion}",
+    "fabric-api": "${fabricApiVersion}"
+  }
+}

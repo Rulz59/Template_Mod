@@ -1,0 +1,12 @@
+modLoader="javafml"
+loaderVersion="${forgeLoaderVersion}"
+license="${modLicense}"
+issueTrackerURL="${modIssues}"
+
+[[mods]]
+modId="${modId}"
+version="${modVersion}"
+displayName="${modName}"
+description="${modDescription}"
+authors = ["${modAuthors}"]
+logoFile="${modIcon}"
